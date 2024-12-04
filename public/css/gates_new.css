@@ -1,0 +1,116 @@
+@font-face {
+    font-family: Europe;
+    font-style: normal;
+    font-weight: 700;
+    src: local("Europe Bold"), local("Europe-Bold"), url(../../fonts/Europe-Bold.woff) format("woff");
+}
+
+body {
+    background-image: url(../../images/picture.jpg);
+    font-family: Open Sans, sans-serif;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+/* вся строка целиком */
+.line {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 100px;
+}
+
+.line:not(:first-child) {
+    margin-top: 10px;
+}
+
+/* blue-line */
+.colored-line {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    height: 100%;
+    font-size: 24px;
+    color: #fff;
+}
+
+.clear-line-block {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    align-self: stretch;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-size: 38px;
+    padding-left: 40px;
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.clear-line-middle-block {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.clear-line-middle {
+    font-size: 46px;
+    color: #fff;
+}
+
+.blue {
+    box-shadow: 0 -2px 0 0 #0cf, 0 2px 0 0 #0cf;
+}
+
+.green {
+    box-shadow: 0 -2px 0 0 #9f0, 0 2px 0 0 #9f0;
+}
+
+.blue-top {
+    box-shadow: 0 -2px 0 0 #0cf;
+    border-color: #0cf;
+    background-color: #80e5ff;
+}
+
+.green-top {
+    box-shadow: 0 -2px 0 0 #9f0;
+    background-color: #4c8000;
+}
+
+.colored-line-middle {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    border-left: 2px solid;
+    border-right: 2px solid;
+    display: -ms-flexbox;
+    display: flex;
+}
+
