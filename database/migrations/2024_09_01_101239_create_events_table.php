@@ -26,6 +26,7 @@ class CreateEventsTable extends Migration
             $table->integer('status_id');
             $table->integer('departure_gate_id');
             $table->integer('arrival_gate_id');
+            $table->integer('destination_id');
             $table->integer('people_limit')->default(0);
             $table->integer('contestants')->default(0);
             $table->float('cost')->default(0.00);
@@ -48,6 +49,10 @@ class CreateEventsTable extends Migration
             $table->foreign('status_id')
                 ->references('id')
                 ->on('statuses');
+
+            $table->foreign('destination_id')
+                ->references('id')
+                ->on('destinations');
 
             $table->foreign('departure_gate_id')
                 ->references('id')

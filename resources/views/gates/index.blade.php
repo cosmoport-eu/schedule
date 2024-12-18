@@ -7,7 +7,7 @@
                 <div class="flight__main">
                     <div class="flight__center">
                         <div class="flight__line">
-                            <div class="flight__line-title flight-title blue-line-left">
+                            <div class="flight__line-title flight-title" style="width: 270px;">
                                 <div class="flight-title__top"></div>
                                 <div class="flight-title__name ui_caption_type"></div>
                                 <div class="flight-title__bottom"></div>
@@ -20,34 +20,34 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="blue-line">
+                            <div class="blue-line" style="width: 15px;">
                                 <div class="blue-line-right-top"></div>
                                 <div class="line-middle blue-line-middle"></div>
                                 <div class="blue-line-right-bottom"></div>
                             </div>
                         </div>
                         <div class="flight__line">
-                            <div class="flight__line-title flight-title blue-line-left">
+                            <div class="flight__line-title flight-title" style="width: 270px;">
                                 <div class="flight-title__top"></div>
                                 <div class="flight-title__name ui_caption_description"></div>
                                 <div class="flight-title__bottom"></div>
                             </div>
                             <div class="flight__line-body">
                                 <div class="flight__name">
-                                    <div id="event_description" class="flight__name-body" style="color: white;"></div>
+                                    <div id="event_description" class="flight__name-body"></div>
                                 </div>
                             </div>
 
-                            <div class="blue-line">
+                            <div class="blue-line" style="width: 15px;">
                                 <div class="blue-line-right-top"></div>
                                 <div class="line-middle blue-line-middle"></div>
                                 <div class="blue-line-right-bottom"></div>
                             </div>
                         </div>
                         <div style="display: flex; width: 100%; margin-top: 10px;">
-                            <div style="width: 50%; padding-right: 0.5em;">
+                            <div style="width: 33%; padding-right: 0.5em;">
                                 <div class="flight__line">
-                                    <div class="flight__line-title flight-title blue-line-left">
+                                    <div class="flight__line-title flight-title" style="width: 270px;">
                                         <div class="flight-title__top"></div>
                                         <div class="flight-title__name ui_caption_duration"></div>
                                         <div class="flight-title__bottom"></div>
@@ -55,24 +55,41 @@
 
                                     <div id="event_duration" class="flight__line-body"></div>
 
-                                    <div class="blue-line">
+                                    <div class="blue-line" style="width: 15px;">
                                         <div class="blue-line-right-top"></div>
                                         <div class="line-middle blue-line-middle"></div>
                                         <div class="blue-line-right-bottom"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div style="width: 50%; padding-left: 0.5em;">
+                            <div style="width: 33%; padding-right: 0.5em;">
+                                <div class="flight__line">
+                                    <div class="flight__line-title flight-title" style="width: 270px;">
+                                        <div class="flight-title__top"></div>
+                                        <div class="flight-title__name ui_caption_destination"></div>
+                                        <div class="flight-title__bottom"></div>
+                                    </div>
+
+                                    <div id="event_destination" class="flight__line-body" style="font-size: 4em;"></div>
+
+                                    <div class="blue-line" style="width: 15px;">
+                                        <div class="blue-line-right-top"></div>
+                                        <div class="line-middle blue-line-middle"></div>
+                                        <div class="blue-line-right-bottom"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 33%; padding-left: 0.5em;">
                                 <div class="flight__line flight__line--status">
-                                    <div class="flight__line-title flight-title blue-line-left">
+                                    <div class="flight__line-title flight-title" style="width: 270px;">
                                         <div class="flight-title__top"></div>
                                         <div class="flight-title__name ui_caption_status"></div>
                                         <div class="flight-title__bottom"></div>
                                     </div>
 
-                                    <div id="event_status" class="flight__line-body"></div>
+                                    <div id="event_status" class="flight__line-body" style="font-size: 4em;"></div>
 
-                                    <div class="blue-line">
+                                    <div class="blue-line" style="width: 15px;">
                                         <div class="green-line-right-top"></div>
                                         <div class="line-middle green-line-middle"></div>
                                         <div class="green-line-right-bottom"></div>
@@ -83,19 +100,19 @@
                     </div>
                     <div class="flight__right">
                         <div class="flight__time">
-                            <div class="flight__time-title flight-title _trapeze blue-line-left">
+                            <div class="flight__time-title flight-title _trapeze" style="width: 270px;">
                                 <div class="flight-title__top"></div>
                                 <div class="flight-title__name flight__time-wrap ui_caption_time_to_departure"></div>
                                 <div class="flight-title__bottom"></div>
                             </div>
                             <div class="flight__line flight__time-number">
-                                <div class="flight__line-title flight-title" style="width: 0.1em;">
+                                <div class="flight__line-title flight-title" style="width: 15px;">
                                     <div class="flight-title__top"></div>
                                     <div class="flight-title__name" style="padding-left: 0;"></div>
                                     <div class="flight-title__bottom"></div>
                                 </div>
                                 <div id="countdown" class="flight__time-content"></div>
-                                <div class="blue-line">
+                                <div class="blue-line" style="width: 15px;">
                                     <div class="blue-line-right-top"></div>
                                     <div class="line-middle blue-line-middle"></div>
                                     <div class="blue-line-right-bottom"></div>
@@ -105,16 +122,15 @@
                     </div>
                 </div>
                 <div class="flight__line">
-                    <div class="flight__line-title flight-title" style="width: 1em;">
+                    <div class="flight__line-title flight-title" style="width: 15px;">
                         <div class="flight-title__top"></div>
                         <div class="flight-title__name" style="padding-left: 0;"></div>
                         <div class="flight-title__bottom"></div>
                     </div>
                     <div class="flight__line-body">
-                        <div id="type_description" class="flight__description-body" style="font-size: 0.6em;">
-                        </div>
+                        <div id="type_description" class="flight__description-body"></div>
                     </div>
-                    <div class="blue-line">
+                    <div class="blue-line" style="width: 15px;">
                         <div class="blue-line-right-top"></div>
                         <div class="line-middle blue-line-middle"></div>
                         <div class="blue-line-right-bottom"></div>
@@ -134,6 +150,7 @@
                             <th class="ui_caption_name"></th>
                             <th class="ui_caption_duration"></th>
                             <th class="ui_caption_limit"></th>
+                            <th class="ui_caption_destination"></th>
                             <th class="ui_caption_status"></th>
                         </tr>
                         </thead>
@@ -193,13 +210,15 @@
                     let hours = Math.trunc(event.duration / 60),
                         minutes = event.duration % 60;
 
-                    let category_code = typeof event.type === 'undefined' ? 'unknown' : event.type.i18n_category_code,
-                        type_code = typeof event.type === 'undefined' ? 'unknown' : event.type.i18n_description_code,
-                        status_code = typeof event.type === 'undefined' ? 'unknown' : event.status.i18n_name_code;
+                    let category_code = typeof event.type === 'undefined' ? 'Category' : event.type.i18n_category_code,
+                        type_code = typeof event.type === 'undefined' ? 'Type' : event.type.i18n_description_code,
+                        destination_code = typeof event.destination === 'undefined' ? 'Destination' : event.destination.i18n_name_code,
+                        status_code = typeof event.status === 'undefined' ? 'Status' : event.status.i18n_name_code;
 
                     document.getElementById('event_category_icon').innerHTML = '';
                     document.getElementById('event_category').innerHTML = getTranslate(category_code);
                     document.getElementById('type_description').innerHTML = getTranslate(type_code);
+                    document.getElementById('event_destination').innerHTML = getTranslate(destination_code);
                     document.getElementById('event_status').innerHTML = getTranslate(status_code);
                     document.getElementById('event_duration').innerHTML = `${hours} h ${minutes} m`;
                     document.getElementById('event_description').innerHTML = event.description;
@@ -243,14 +262,16 @@
                             nameCell = document.createElement('td'),
                             durationCell = document.createElement('td'),
                             limitCell = document.createElement('td'),
+                            destinationCell = document.createElement('td'),
                             statusCell = document.createElement('td');
 
                         let hours = Math.trunc(event.duration / 60),
                             minutes = event.duration % 60;
 
-                        let category_code = typeof event.type === 'undefined' ? 'unknown' : event.type.i18n_category_code,
-                            type_code = typeof event.type === 'undefined' ? 'unknown' : event.type.i18n_name_code,
-                            status_code = typeof event.type === 'undefined' ? 'unknown' : event.status.i18n_name_code;
+                        let category_code = typeof event.type === 'undefined' ? 'Category' : event.type.i18n_category_code,
+                            type_code = typeof event.type === 'undefined' ? 'Type' : event.type.i18n_name_code,
+                            destination_code = typeof event.destination === 'undefined' ? 'Destination' : event.destination.i18n_name_code,
+                            status_code = typeof event.status === 'undefined' ? 'Status' : event.status.i18n_name_code;
 
                         let start_hours = new Date(event.time_start).getHours(),
                             start_minutes = new Date(event.time_start).getMinutes();
@@ -260,6 +281,7 @@
                         nameCell.textContent = getTranslate(type_code);
                         durationCell.textContent = `${hours} h ${minutes} m`;
                         limitCell.textContent = event.people_limit;
+                        destinationCell.textContent = getTranslate(destination_code);
                         statusCell.textContent = getTranslate(status_code);
 
                         row.appendChild(timeStartCell);
@@ -267,6 +289,7 @@
                         row.appendChild(nameCell);
                         row.appendChild(durationCell);
                         row.appendChild(limitCell);
+                        row.appendChild(destinationCell);
                         row.appendChild(statusCell);
 
                         $tBody.appendChild(row);
@@ -296,7 +319,7 @@
     }
 
     function getTranslate(code) {
-        let translate = currentTranslations.find(item => item.code === code && item.locale_id === locale_id);
+        let translate = currentTranslations.find(item => item.code === code && item.locale_id == locale_id);
 
         return typeof translate === 'undefined' ? 'unknown' : translate.text;
     }
@@ -308,12 +331,6 @@
         let eventTime = new Date(`${is_boarding ? event.time_start : event.time_end}`).getTime();
         // let timeDifference = is_boarding ? now - eventTime : eventTime - now;
         let timeDifference = eventTime - now;
-
-        console.log(`is_boarding: ${is_boarding}`);
-        console.log(`eventTime: ${eventTime}`);
-        console.log(`timeDifference: ${timeDifference}`);
-        console.log(`now - eventTime: ${now - eventTime}`);
-        console.log(`eventTime - now: ${eventTime - now}`);
 
         let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
             minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)),

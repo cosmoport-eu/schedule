@@ -99,6 +99,46 @@
                     </div>
                 </div>
 
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="destination_id" class="block mb-3 text-xs uppercase font-bold text-gray-700">Destination</label>
+
+                        <select id="destination_id"
+                                name="destination_id"
+                                class="border border-gray-400 p-2 w-full"
+                        >
+                            <option value="">Destination</option>
+
+                            @if (isset($destinations))
+                                @foreach($destinations as $destination)
+                                    <option value="{{ $destination->id }}"
+                                        {{ $event->destination_id == $destination->id ? 'selected' : '' }}
+                                    >{{ $destination->translationEn->text }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div>
+                        <label for="status_id" class="block mb-3 text-xs uppercase font-bold text-gray-700">Status</label>
+
+                        <select id="status_id"
+                                name="status_id"
+                                class="border border-gray-400 p-2 w-full"
+                                required
+                        >
+                            <option value="">Choose Status</option>
+
+                            @if (isset($statuses))
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status->id }}"
+                                        {{ $event->status_id == $status->id ? 'selected' : '' }}
+                                    >{{ $status->translationEn->text }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+
                 <div class="flex space-x-4 mb-4">
                     <div class="w-1/4">
                         <label class="block mb-3 text-xs uppercase font-bold text-gray-700" for="date">Date</label>
@@ -186,7 +226,15 @@
                 </div>
 
                 <div class="mb-2">
-                    <label class="block mb-2 text-xs uppercase font-bold text-gray-700" for="description">Description</label>
+                    <label class="block mb-2 text-xs uppercase font-bold text-gray-700" for="description">
+                        Description
+                    </label>
+
+                    <div class="mb-6 mt-1">
+                        <p class="block mb-2 text-xs uppercase font-bold text-red-500">
+                            For Birthday: kid name and age
+                        </p>
+                    </div>
 
                     <textarea class="border border-gray-400 p-2 w-full"
                               id="description"
@@ -198,27 +246,6 @@
                     @enderror
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="status_id" class="block mb-3 text-xs uppercase font-bold text-gray-700">Status</label>
-
-                        <select id="status_id"
-                                name="status_id"
-                                class="border border-gray-400 p-2 w-full"
-                                required
-                        >
-                            <option value="">Choose Status</option>
-
-                            @if (isset($statuses))
-                                @foreach($statuses as $status)
-                                    <option value="{{ $status->id }}"
-                                        {{ $event->status_id == $status->id ? 'selected' : '' }}
-                                    >{{ $status->translationEn->text }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-                </div>
                 
                 <x-has_error />
 

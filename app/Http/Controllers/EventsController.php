@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
+use App\Models\Destinations;
 use App\Models\Events;
 use App\Models\Gates;
 use App\Models\Settings;
@@ -28,7 +29,7 @@ class EventsController extends Controller
         $range = is_null($pause) ? 5 : $pause->value;
 
         return view('events.index', [
-            'records' => Events::with('typeEn', 'statusEn', 'departureGateEn')
+            'records' => Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
                 ->orderBy('date', 'DESC')
                 ->orderBy('time_start', 'DESC')
                 ->paginate(5),
@@ -58,7 +59,7 @@ class EventsController extends Controller
         return Events::where('date', '=', Carbon::now()->format('Y-m-d'))
             ->whereStatusId(Statuses::WAITING)
             ->whereDepartureGateId($departure_gate_id)
-            ->with('type', 'status', 'departureGate')
+            ->with('type', 'status', 'departureGate', 'destination')
             ->orderBy('time_start', 'asc')
             ->limit(2)
             ->get();
@@ -77,7 +78,7 @@ class EventsController extends Controller
                 Statuses::DEPARTED,
                 Statuses::RETURNING
             ])
-            ->with('type', 'status', 'departureGate')
+            ->with('type', 'status', 'departureGate', 'destination')
             ->first();
     }
 
@@ -90,8 +91,9 @@ class EventsController extends Controller
     {
         $categories = Categories::with(['typesEn.subtypesEn'])->get();
         $gates = Gates::with('translationEn')->get();
+        $destinations = Destinations::with('translationEn')->get();
 
-        return view('events.create', compact('categories', 'gates'));
+        return view('events.create', compact('categories', 'gates', 'destinations'));
     }
 
     /**
@@ -107,6 +109,7 @@ class EventsController extends Controller
             'type_id' => 'required|integer|exists:types,id',
             'subtype_id' => 'nullable|integer|exists:types,id',
             'gate_id' => 'required|integer|exists:gates,id',
+            'destination_id' => 'nullable|integer|exists:destinations,id',
             'date' => 'required|string',
             'time_start' => 'required|string|max:255',
             'duration_hours' => 'nullable|integer|min:0|max:23',
@@ -140,6 +143,7 @@ class EventsController extends Controller
             'status_id' => Statuses::WAITING,
             'departure_gate_id' => $validatedData['gate_id'],
             'arrival_gate_id' => $validatedData['gate_id'],
+            'destination_id' => $validatedData['destination_id'],
             'people_limit' => $validatedData['people_limit'],
             'cost' => $validatedData['cost'],
             'created_at' => $date,
@@ -160,13 +164,14 @@ class EventsController extends Controller
     public function edit($id)
     {
         $event = Events::whereId($id)
-            ->with('typeEn', 'statusEn', 'departureGateEn')
+            ->with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
             ->first();
         $categories = Categories::with(['typesEn.subtypesEn'])->get();
         $gates = Gates::with('translationEn')->get();
         $statuses = Statuses::with('translationEn')->get();
+        $destinations = Destinations::with('translationEn')->get();
 
-        return view('events.edit', compact('event', 'categories', 'gates', 'statuses'));
+        return view('events.edit', compact('event', 'categories', 'gates', 'statuses', 'destinations'));
     }
 
     /**
@@ -183,6 +188,7 @@ class EventsController extends Controller
             'type_id' => 'required|integer|exists:types,id',
             'subtype_id' => 'nullable|integer|exists:types,id',
             'gate_id' => 'required|integer|exists:gates,id',
+            'destination_id' => 'nullable|integer|exists:destinations,id',
             'status_id' => 'required|integer|exists:statuses,id',
             'date' => 'required|string',
             'time_start' => 'required|string|max:255',
@@ -219,6 +225,7 @@ class EventsController extends Controller
             'type_id' => $type_id,
             'status_id' => $validatedData['status_id'],
             'departure_gate_id' => $validatedData['gate_id'],
+            'destination_id' => $validatedData['destination_id'],
             'arrival_gate_id' => $validatedData['gate_id'],
             'people_limit' => $validatedData['people_limit'],
             'cost' => $validatedData['cost'],

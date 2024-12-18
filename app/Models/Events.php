@@ -21,6 +21,7 @@ use Illuminate\Support\Carbon;
  * @property int $status_id
  * @property int $departure_gate_id
  * @property int $arrival_gate_id
+ * @property int $destination_id
  * @property int $people_limit
  * @property int $contestants
  * @property float $cost
@@ -38,6 +39,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Events whereStatusId($value)
  * @method static Builder|Events whereDepartureGateId($value)
  * @method static Builder|Events whereArrivalGateId($value)
+ * @method static Builder|Events whereDestinationId($value)
  * @method static Builder|Events wherePeopleLimit($value)
  * @method static Builder|Events whereContestants($value)
  * @method static Builder|Events whereCost($value)
@@ -71,7 +73,7 @@ class Events extends MainModel
      * @var array
      */
     protected $fillable = ['date', 'time_start', 'time_end', 'description', 'duration', 'type_id', 'status_id',
-        'departure_gate_id', 'arrival_gate_id', 'people_limit', 'contestants', 'cost'];
+        'destination_id', 'departure_gate_id', 'arrival_gate_id', 'people_limit', 'contestants', 'cost'];
 
     /**
      * @return HasOne
@@ -95,6 +97,14 @@ class Events extends MainModel
     public function departureGate()
     {
         return $this->hasOne(Gates::class, 'id', 'departure_gate_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function destination()
+    {
+        return $this->hasOne(Destinations::class, 'id', 'destination_id');
     }
 
     /**
@@ -130,6 +140,15 @@ class Events extends MainModel
     public function arrivalGateEn()
     {
         return $this->hasOne(Gates::class, 'id', 'arrival_gate_id')
+            ->with('translationEn');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function destinationEn()
+    {
+        return $this->hasOne(Destinations::class, 'id', 'destination_id')
             ->with('translationEn');
     }
 }
