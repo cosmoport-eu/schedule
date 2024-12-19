@@ -144,10 +144,12 @@
                         <label class="block mb-3 text-xs uppercase font-bold text-gray-700" for="date">Date</label>
 
                         <input id="date" name="date"
-                               type="date"
-                               class="border border-gray-400 p-2 w-full"
-                               value="{{ $event->date }}"
-                               required
+                            datepicker datepicker-autohide
+                            type="text"
+                            class="border border-gray-400 p-2 w-full"
+                            value="{{ \Carbon\Carbon::parse($event->date)->format('m/d/Y') }}"
+                            placeholder="Select date"
+                            required
                         >
                     </div>
                     <div class="w-1/4">

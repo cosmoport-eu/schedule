@@ -142,21 +142,6 @@
             const locales = @json($locales);
             const pause = @json($pause);
             const timetable_screen_lines = @json($timetable_screen_lines);
-            console.log(locales);
-            console.log(pause);
-            console.log(timetable_screen_lines);
-
-            // document.getElementById('save_pause').addEventListener('click', function () {
-            //     console.log('save_pause');
-            // });
-            //
-            // document.getElementById('save_lines').addEventListener('click', function () {
-            //     console.log('save_lines');
-            // });
-            //
-            // document.getElementById('save_locales').addEventListener('click', function () {
-            //     console.log('save_locales');
-            // });
         });
     </script>
 </x-dictionaries-main>

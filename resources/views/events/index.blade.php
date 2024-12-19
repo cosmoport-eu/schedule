@@ -14,26 +14,70 @@
     </header>
 
     <main>
+        <form method="POST" action="/events/get-filtered">
+            @csrf
 
-<div id="date-range-picker" date-rangepicker class="flex items-center">
-  <div class="relative">
-    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-        </svg>
-    </div>
-    <input id="datepicker-range-start" name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date start">
-  </div>
-  <span class="mx-4 text-gray-500">to</span>
-  <div class="relative">
-    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-        </svg>
-    </div>
-    <input id="datepicker-range-end" name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date end">
-</div>
-</div>
+            <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 flex space-x-4 mb-4">
+                <div date-rangepicker class="flex space-x-4 mb-4">
+                    <div class="w-1/2 relative">
+                        <label for="date_start"
+                            class="block mb-3 text-xs uppercase font-bold text-gray-700"
+                        >
+                            Date Start
+                        </label>
+                        <input id="date_start" name="date_start"
+                            type="text"
+                            class="border border-gray-400 p-2 w-full"
+                            value="{{ \Carbon\Carbon::now()->format('m/d/Y') }}"
+                            placeholder="Select date start"
+                        >
+                    </div>
+                    <div class="w-1/2 relative">
+                        <label for="date_end"
+                            class="block mb-3 text-xs uppercase font-bold text-gray-700"
+                        >
+                            Date End
+                        </label>
+                        <input id="date_end" name="date_end"
+                            type="text"
+                            class="border border-gray-400 p-2 w-full"
+                            value="{{ \Carbon\Carbon::now()->addDays(7)->format('m/d/Y') }}"
+                            placeholder="Select date end"
+                        >
+                    </div>
+                </div>
+                <div class="w-1/4">
+                    <label for="status_id"
+                        class="block mb-3 text-xs uppercase font-bold text-gray-700"
+                    >
+                        Statuses
+                    </label>
+
+                    <select id="status_id"
+                            name="status_id[]"
+                            class="border border-gray-400 p-2 w-full"
+                            multiple
+                            required
+                    >
+                        <option value="">Choose Status</option>
+
+                        @if (isset($statuses))
+                            @foreach($statuses as $status)
+                                <option value="{{ $status->id }}"
+                                    selected
+                                >{{ $status->translationEn->text }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="w-1/4">
+                    <button type="submit"
+                        class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500 uppercase">
+                        update
+                    </button>
+                </div>
+            </div>
+        </form>
 
         <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
@@ -108,11 +152,6 @@
             left_range_start = new Date(now + (range * 60000)).getTime(),
             right_range_start = new Date(now + ((range + 5) * 60000)).getTime(),
             range_end = new Date(now - (range * 60000)).getTime();
-        console.log(`now: ${now_.getHours().toString().padStart(2, '0')}:${now_.getMinutes().toString().padStart(2, '0')}`);
-        console.log(`now: ${now}`);
-        console.log(`left_range_start: ${left_range_start}`);
-        console.log(`right_range_start: ${right_range_start}`);
-        console.log(`range_end: ${range_end}`);
 
         let new_status_id = 0;
 
@@ -126,38 +165,32 @@
             let time_start = time_start_.getTime(),
                 time_end = time_end_.getTime();
 
-            console.log(`${event.id}: ${event.status_en.translation_en.text} | ${time_start_full} - ${time_end_full}`);
-
             switch (event) {
                 // Waiting -> Boarding
                 case 2:
                     if (left_range_start <= time_start <= right_range_start) {
                         new_status_id = 3;
-                        console.log(`   to Boarding`);
                     }
                     break;
 
-                // Boarding -> Departed
+                    // Boarding -> Departed
                 case 3:
                     if (time_start <= now) {
                         new_status_id = 4;
-                        console.log(`   to Departed`);
                     }
                     break;
 
-                // Departed -> Returning
+                    // Departed -> Returning
                 case 4:
                     if (time_end <= now <= range_end) {
                         new_status_id = 5;
-                        console.log(`   to Returning`);
                     }
                     break;
 
-                // Returning -> Returned
+                    // Returning -> Returned
                 case 5:
                     if (time_end <= now) {
                         new_status_id = 6;
-                        console.log(`   to Returned`);
                     }
                     break;
             }
@@ -173,7 +206,7 @@
         let xhr = new XMLHttpRequest();
 
         xhr.open('PUT', `/events/${event_id}`, true);
-        xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
         // xhr.onload
         xhr.onreadystatechange = function() {

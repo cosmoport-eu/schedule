@@ -51,6 +51,7 @@ Route::put('settings/{parameter}', [SettingsController::class, 'update'])->name(
 
 Route::resource('events', EventsController::class);
 Route::post('events/store', [EventsController::class, 'store'])->name('events.store');
+Route::post('events/get-filtered', 'App\Http\Controllers\EventsController@getFiltered');
 Route::get('events/gate/{departure_gate_id}', 'App\Http\Controllers\EventsController@gate');
 Route::get('events/next-events-for-gate/{departure_gate_id}', 'App\Http\Controllers\EventsController@nextEventsForGate');
 Route::get('events/get-current-for-gate/{departure_gate_id}', 'App\Http\Controllers\EventsController@getCurrentForGate');

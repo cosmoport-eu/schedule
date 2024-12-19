@@ -383,7 +383,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const subtypesEn = @json($type->subtypesEn);
-            console.log(@json($type));
 
             let subtypeIndex = subtypesEn.length;
             const $subtypeContainer = document.getElementById('subtypes_container');

@@ -8,6 +8,7 @@ use App\Models\Events;
 use App\Models\Gates;
 use App\Models\Settings;
 use App\Models\Statuses;
+use App\Models\Types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -26,6 +27,11 @@ class EventsController extends Controller
     public function index()
     {
         $pause = Settings::whereParameter('pause')->first();
+        $statuses = Statuses::with('translationEn')->get();
+        // $categories = Categories::with(['typesEn.subtypesEn'])->get();
+        // $types = Types::with('nameTranslationEn')->get();
+        // $gates = Gates::with('translationEn')->get();
+        // $destinations = Destinations::with('translationEn')->get();
         $range = is_null($pause) ? 5 : $pause->value;
 
         return view('events.index', [
@@ -33,8 +39,32 @@ class EventsController extends Controller
                 ->orderBy('date', 'DESC')
                 ->orderBy('time_start', 'DESC')
                 ->paginate(5),
-            'range' => $range
+            'range' => $range,
+            // 'categories' => $categories,
+            // 'types' => $types,
+            // 'gates' => $gates,
+            // 'destinations' => $destinations,
+            'statuses' => $statuses,
         ]);
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getFiltered(Request $request)
+    {
+        dd($request->post());
+        dd($request->get());
+        return Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
+            ->whereBetween('date', [
+                Carbon::parse($request->post('date_start'))->format('Y-m-d'),
+                Carbon::parse($request->post('date_end'))->format('Y-m-d')
+            ])
+            ->whereIn('status_id', $request->post('status_id'))
+            ->orderBy('date', 'DESC')
+            ->orderBy('time_start', 'DESC')
+            ->paginate(5);
     }
 
     /**
@@ -132,7 +162,7 @@ class EventsController extends Controller
         $date = Carbon::now()->format('Y-m-d H:i:s');
 
         Events::create([
-            'date' => $validatedData['date'],
+            'date' => Carbon::parse($validatedData['date'])->format('Y-m-d'),
             'time_start' => Carbon::parse("{$validatedData['date']} {$validatedData['time_start']}")->format('Y-m-d H:i:s'),
             'time_end' => Carbon::parse("{$validatedData['date']} $time_end")->format('Y-m-d H:i:s'),
 //            'time_start' => $validatedData['time_start'],
@@ -215,7 +245,7 @@ class EventsController extends Controller
         $date = Carbon::now()->format('Y-m-d H:i:s');
 
         $model->update([
-            'date' => $validatedData['date'],
+            'date' => Carbon::parse($validatedData['date'])->format('Y-m-d'),
             'time_start' => Carbon::parse("{$validatedData['date']} {$validatedData['time_start']}")->format('Y-m-d H:i:s'),
             'time_end' => Carbon::parse("{$validatedData['date']} $time_end")->format('Y-m-d H:i:s'),
 //            'time_start' => $validatedData['time_start'],
