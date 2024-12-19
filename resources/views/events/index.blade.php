@@ -134,9 +134,6 @@
                 </table>
             </div>
 
-            <div class="mt-6">
-                {{ $records->links() }}
-            </div>
         </div>
     </main>
 </x-layout>

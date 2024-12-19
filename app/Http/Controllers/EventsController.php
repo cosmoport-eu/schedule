@@ -20,6 +20,9 @@ class EventsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * пока что без пагинации, для фильтрованных задач не отрабатывает смена страниц
+     * нужно более делатьно разбираться с визуалом таблицы
+     *
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -36,12 +39,15 @@ class EventsController extends Controller
             ->with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
             ->orderBy('date', 'ASC')
             ->orderBy('time_start', 'ASC')
-            ->paginate(5);
+            ->get();
 
         return view('events.index', compact('records', 'range', 'statuses', 'filters'));
     }
 
     /**
+     * пока что без пагинации, для фильтрованных задач не отрабатывает смена страниц
+     * нужно более делатьно разбираться с визуалом таблицы
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -52,29 +58,37 @@ class EventsController extends Controller
         $statuses = Statuses::with('translationEn')->get();
         $range = is_null($pause) ? 5 : $pause->value;
 
-        $records = Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
+        // такой метод не работает
+//        $records = Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
+//            ->orderBy('date', 'ASC')
+//            ->orderBy('time_start', 'ASC');
+//
+//        if (isset($filters['date_start'])) {
+//            $records->where('date', '>=', Carbon::parse($filters['date_start'])->format('Y-m-d'));
+//        }
+//
+//        if (isset($filters['date_end'])) {
+//            $records->where('date', '<=', Carbon::parse($filters['date_end'])->format('Y-m-d'));
+//        }
+//
+//        if (isset($filters['status_id'])) {
+//            $records->whereIn('status_id', $filters['status_id']);
+//        }
+//
+//        $records->paginate(5);
+
+        $records = Events::whereIn('status_id', $filters['status_id'])
+            ->whereBetween('date', [
+                Carbon::parse($filters['date_start'])->format('Y-m-d'),
+                Carbon::parse($filters['date_end'])->format('Y-m-d')
+            ])
+            ->with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
             ->orderBy('date', 'ASC')
-            ->orderBy('time_start', 'ASC');
-
-        if (isset($filters['date_start'])) {
-            $records->where('date', '>=', Carbon::parse($filters['date_start'])->format('Y-m-d'));
-        }
-
-        if (isset($filters['date_end'])) {
-            $records->where('date', '<=', Carbon::parse($filters['date_end'])->format('Y-m-d'));
-        }
-
-        if (isset($filters['status_id'])) {
-            $records->whereIn('status_id', $filters['status_id']);
-        }
-
-        $records->paginate(5);
+            ->orderBy('time_start', 'ASC')
+            ->get();
 
         return view('events.index', [
-            'records' => Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
-                ->orderBy('date', 'DESC')
-                ->orderBy('time_start', 'DESC')
-                ->paginate(5),
+            'records' => $records,
             'range' => $range,
             'statuses' => $statuses,
             'filters' => $filters
