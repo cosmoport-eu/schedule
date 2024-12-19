@@ -30,6 +30,7 @@
                                class="border border-gray-400 p-2 w-full"
                                value="{{ isset($filters['date_start']) ? \Carbon\Carbon::parse($filters['date_start'])->format('m/d/Y') : \Carbon\Carbon::now()->format('m/d/Y') }}"
                                placeholder="Select date start"
+                               required
                         >
                     </div>
                     <div class="w-1/2 relative">
@@ -43,6 +44,7 @@
                                class="border border-gray-400 p-2 w-full"
                                value="{{ isset($filters['date_end']) ? \Carbon\Carbon::parse($filters['date_end'])->format('m/d/Y') : \Carbon\Carbon::now()->addDays(7)->format('m/d/Y') }}"
                                placeholder="Select date end"
+                               required
                         >
                     </div>
                 </div>
@@ -57,14 +59,35 @@
                             name="status_id[]"
                             class="border border-gray-400 p-2 w-full"
                             multiple
+                            required
                     >
-                        <option value="">Choose Status</option>
-
                         @if (isset($statuses))
                             @foreach($statuses as $status)
                                 <option value="{{ $status->id }}"
                                     {{ isset($filters['status_id']) ? (in_array($status->id, $filters['status_id']) ? 'selected' : '') : 'selected' }}
                                 >{{ $status->translationEn->text }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="w-1/4">
+                    <label for="destination_id"
+                           class="block mb-3 text-xs uppercase font-bold text-gray-700"
+                    >
+                        Destinations
+                    </label>
+
+                    <select id="destination_id"
+                            name="destination_id[]"
+                            class="border border-gray-400 p-2 w-full"
+                            multiple
+                            required
+                    >
+                        @if (isset($destinations))
+                            @foreach($destinations as $destination)
+                                <option value="{{ $destination->id }}"
+                                    {{ isset($filters['destination_id']) ? (in_array($destination->id, $filters['destination_id']) ? 'selected' : '') : 'selected' }}
+                                >{{ $destination->translationEn->text }}</option>
                             @endforeach
                         @endif
                     </select>

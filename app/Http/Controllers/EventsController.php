@@ -29,6 +29,7 @@ class EventsController extends Controller
     {
         $pause = Settings::whereParameter('pause')->first();
         $statuses = Statuses::with('translationEn')->get();
+        $destinations = Destinations::with('translationEn')->get();
         $range = is_null($pause) ? 5 : $pause->value;
         $filters = [];
 
@@ -41,7 +42,7 @@ class EventsController extends Controller
             ->orderBy('time_start', 'ASC')
             ->get();
 
-        return view('events.index', compact('records', 'range', 'statuses', 'filters'));
+        return view('events.index', compact('records', 'range', 'statuses', 'destinations', 'filters'));
     }
 
     /**
@@ -56,6 +57,7 @@ class EventsController extends Controller
         $filters = $request->all();
         $pause = Settings::whereParameter('pause')->first();
         $statuses = Statuses::with('translationEn')->get();
+        $destinations = Destinations::with('translationEn')->get();
         $range = is_null($pause) ? 5 : $pause->value;
 
         // такой метод не работает
@@ -78,6 +80,7 @@ class EventsController extends Controller
 //        $records->paginate(5);
 
         $records = Events::whereIn('status_id', $filters['status_id'])
+            ->whereIn('destination_id', $filters['destination_id'])
             ->whereBetween('date', [
                 Carbon::parse($filters['date_start'])->format('Y-m-d'),
                 Carbon::parse($filters['date_end'])->format('Y-m-d')
@@ -91,6 +94,7 @@ class EventsController extends Controller
             'records' => $records,
             'range' => $range,
             'statuses' => $statuses,
+            'destinations' => $destinations,
             'filters' => $filters
         ]);
     }
