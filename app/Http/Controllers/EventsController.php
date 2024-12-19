@@ -8,10 +8,8 @@ use App\Models\Events;
 use App\Models\Gates;
 use App\Models\Settings;
 use App\Models\Statuses;
-use App\Models\Types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class EventsController
@@ -28,24 +26,15 @@ class EventsController extends Controller
     {
         $pause = Settings::whereParameter('pause')->first();
         $statuses = Statuses::with('translationEn')->get();
-        // $categories = Categories::with(['typesEn.subtypesEn'])->get();
-        // $types = Types::with('nameTranslationEn')->get();
-        // $gates = Gates::with('translationEn')->get();
-        // $destinations = Destinations::with('translationEn')->get();
         $range = is_null($pause) ? 5 : $pause->value;
+        $filters = [];
 
-        return view('events.index', [
-            'records' => Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
-                ->orderBy('date', 'DESC')
-                ->orderBy('time_start', 'DESC')
-                ->paginate(5),
-            'range' => $range,
-            // 'categories' => $categories,
-            // 'types' => $types,
-            // 'gates' => $gates,
-            // 'destinations' => $destinations,
-            'statuses' => $statuses,
-        ]);
+        $records = Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
+            ->orderBy('date', 'DESC')
+            ->orderBy('time_start', 'DESC')
+            ->paginate(5);
+
+        return view('events.index', compact('records', 'range', 'statuses', 'filters'));
     }
 
     /**
@@ -54,17 +43,38 @@ class EventsController extends Controller
      */
     public function getFiltered(Request $request)
     {
-        dd($request->post());
-        dd($request->get());
-        return Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
-            ->whereBetween('date', [
-                Carbon::parse($request->post('date_start'))->format('Y-m-d'),
-                Carbon::parse($request->post('date_end'))->format('Y-m-d')
-            ])
-            ->whereIn('status_id', $request->post('status_id'))
+        $filters = $request->all();
+        $pause = Settings::whereParameter('pause')->first();
+        $statuses = Statuses::with('translationEn')->get();
+        $range = is_null($pause) ? 5 : $pause->value;
+
+        $records = Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
             ->orderBy('date', 'DESC')
-            ->orderBy('time_start', 'DESC')
-            ->paginate(5);
+            ->orderBy('time_start', 'DESC');
+
+        if (isset($filters['date_start'])) {
+            $records->where('date', '>=', Carbon::parse($filters['date_start'])->format('Y-m-d'));
+        }
+
+        if (isset($filters['date_end'])) {
+            $records->where('date', '<=', Carbon::parse($filters['date_end'])->format('Y-m-d'));
+        }
+
+        if (isset($filters['status_id'])) {
+            $records->whereIn('status_id', $filters['status_id']);
+        }
+
+        $records->paginate(5);
+
+        return view('events.index', [
+            'records' => Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
+                ->orderBy('date', 'DESC')
+                ->orderBy('time_start', 'DESC')
+                ->paginate(5),
+            'range' => $range,
+            'statuses' => $statuses,
+            'filters' => $filters
+        ]);
     }
 
     /**

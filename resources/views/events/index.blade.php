@@ -18,37 +18,37 @@
             @csrf
 
             <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 flex space-x-4 mb-4">
-                <div date-rangepicker class="flex space-x-4 mb-4">
+                <div class="flex space-x-4 mb-4" date-rangepicker>
                     <div class="w-1/2 relative">
                         <label for="date_start"
-                            class="block mb-3 text-xs uppercase font-bold text-gray-700"
+                               class="block mb-3 text-xs uppercase font-bold text-gray-700"
                         >
                             Date Start
                         </label>
                         <input id="date_start" name="date_start"
-                            type="text"
-                            class="border border-gray-400 p-2 w-full"
-                            value="{{ \Carbon\Carbon::now()->format('m/d/Y') }}"
-                            placeholder="Select date start"
+                               type="text"
+                               class="border border-gray-400 p-2 w-full"
+                               value="{{ isset($filters['date_start']) ? \Carbon\Carbon::parse($filters['date_start'])->format('m/d/Y') : \Carbon\Carbon::now()->format('m/d/Y') }}"
+                               placeholder="Select date start"
                         >
                     </div>
                     <div class="w-1/2 relative">
                         <label for="date_end"
-                            class="block mb-3 text-xs uppercase font-bold text-gray-700"
+                               class="block mb-3 text-xs uppercase font-bold text-gray-700"
                         >
                             Date End
                         </label>
                         <input id="date_end" name="date_end"
-                            type="text"
-                            class="border border-gray-400 p-2 w-full"
-                            value="{{ \Carbon\Carbon::now()->addDays(7)->format('m/d/Y') }}"
-                            placeholder="Select date end"
+                               type="text"
+                               class="border border-gray-400 p-2 w-full"
+                               value="{{ isset($filters['date_end']) ? \Carbon\Carbon::parse($filters['date_end'])->format('m/d/Y') : \Carbon\Carbon::now()->addDays(7)->format('m/d/Y') }}"
+                               placeholder="Select date end"
                         >
                     </div>
                 </div>
                 <div class="w-1/4">
                     <label for="status_id"
-                        class="block mb-3 text-xs uppercase font-bold text-gray-700"
+                           class="block mb-3 text-xs uppercase font-bold text-gray-700"
                     >
                         Statuses
                     </label>
@@ -57,14 +57,13 @@
                             name="status_id[]"
                             class="border border-gray-400 p-2 w-full"
                             multiple
-                            required
                     >
                         <option value="">Choose Status</option>
 
                         @if (isset($statuses))
                             @foreach($statuses as $status)
                                 <option value="{{ $status->id }}"
-                                    selected
+                                    {{ isset($filters['status_id']) && in_array($status->id, $filters['status_id']) ? 'selected' : '' }}
                                 >{{ $status->translationEn->text }}</option>
                             @endforeach
                         @endif
@@ -72,7 +71,7 @@
                 </div>
                 <div class="w-1/4">
                     <button type="submit"
-                        class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500 uppercase">
+                            class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500 uppercase">
                         update
                     </button>
                 </div>

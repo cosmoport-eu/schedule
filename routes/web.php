@@ -55,3 +55,5 @@ Route::post('events/get-filtered', 'App\Http\Controllers\EventsController@getFil
 Route::get('events/gate/{departure_gate_id}', 'App\Http\Controllers\EventsController@gate');
 Route::get('events/next-events-for-gate/{departure_gate_id}', 'App\Http\Controllers\EventsController@nextEventsForGate');
 Route::get('events/get-current-for-gate/{departure_gate_id}', 'App\Http\Controllers\EventsController@getCurrentForGate');
+
+Route::post('/events/get-filtered', 'App\Http\Controllers\EventsController@getFiltered');
