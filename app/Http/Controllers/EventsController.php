@@ -29,9 +29,13 @@ class EventsController extends Controller
         $range = is_null($pause) ? 5 : $pause->value;
         $filters = [];
 
-        $records = Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
-            ->orderBy('date', 'DESC')
-            ->orderBy('time_start', 'DESC')
+        $records = Events::whereBetween('date', [
+                Carbon::now()->format('Y-m-d'),
+                Carbon::now()->addDays(7)->format('Y-m-d')
+            ])
+            ->with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
+            ->orderBy('date', 'ASC')
+            ->orderBy('time_start', 'ASC')
             ->paginate(5);
 
         return view('events.index', compact('records', 'range', 'statuses', 'filters'));
@@ -49,8 +53,8 @@ class EventsController extends Controller
         $range = is_null($pause) ? 5 : $pause->value;
 
         $records = Events::with('typeEn', 'statusEn', 'departureGateEn', 'destinationEn')
-            ->orderBy('date', 'DESC')
-            ->orderBy('time_start', 'DESC');
+            ->orderBy('date', 'ASC')
+            ->orderBy('time_start', 'ASC');
 
         if (isset($filters['date_start'])) {
             $records->where('date', '>=', Carbon::parse($filters['date_start'])->format('Y-m-d'));

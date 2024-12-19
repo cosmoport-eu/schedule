@@ -63,7 +63,7 @@
                         @if (isset($statuses))
                             @foreach($statuses as $status)
                                 <option value="{{ $status->id }}"
-                                    {{ isset($filters['status_id']) && in_array($status->id, $filters['status_id']) ? 'selected' : '' }}
+                                    {{ isset($filters['status_id']) ? (in_array($status->id, $filters['status_id']) ? 'selected' : '') : 'selected' }}
                                 >{{ $status->translationEn->text }}</option>
                             @endforeach
                         @endif
