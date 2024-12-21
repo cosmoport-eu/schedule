@@ -83,6 +83,9 @@
                             multiple
                             required
                     >
+                        <option value="0"
+                            {{ isset($filters['destination_id']) ? (in_array('0', $filters['destination_id']) ? 'selected' : '') : 'selected' }}
+                        >No destination yet</option>
                         @if (isset($destinations))
                             @foreach($destinations as $destination)
                                 <option value="{{ $destination->id }}"

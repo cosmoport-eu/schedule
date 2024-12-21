@@ -107,7 +107,7 @@
                                 name="destination_id"
                                 class="border border-gray-400 p-2 w-full"
                         >
-                            <option value="">Destination</option>
+                            <option value="0">Destination</option>
 
                             @if (isset($destinations))
                                 @foreach($destinations as $destination)

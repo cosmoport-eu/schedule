@@ -171,7 +171,7 @@ class EventsController extends Controller
             'type_id' => 'required|integer|exists:types,id',
             'subtype_id' => 'nullable|integer|exists:types,id',
             'gate_id' => 'required|integer|exists:gates,id',
-            'destination_id' => 'nullable|integer|exists:destinations,id',
+            'destination_id' => 'nullable|integer',
             'date' => 'required|string',
             'time_start' => 'required|string|max:255',
             'duration_hours' => 'nullable|integer|min:0|max:23',
