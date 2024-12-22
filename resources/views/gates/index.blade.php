@@ -210,10 +210,10 @@
                     let hours = Math.trunc(event.duration / 60),
                         minutes = event.duration % 60;
 
-                    let category_code = typeof event.type === 'undefined' ? 'Category' : event.type.i18n_category_code,
-                        type_code = typeof event.type === 'undefined' ? 'Type' : event.type.i18n_description_code,
-                        destination_code = typeof event.destination === 'undefined' ? 'Destination' : event.destination.i18n_name_code,
-                        status_code = typeof event.status === 'undefined' ? 'Status' : event.status.i18n_name_code;
+                    let category_code = typeof event.type === 'undefined' ? '' : event.type.i18n_category_code,
+                        type_code = typeof event.type === 'undefined' ? '' : event.type.i18n_description_code,
+                        destination_code = (typeof event.destination === 'undefined' || event.destination_id == 0) ? '' : event.destination.i18n_name_code,
+                        status_code = typeof event.status === 'undefined' ? '' : event.status.i18n_name_code;
 
                     document.getElementById('event_category_icon').innerHTML = '';
                     document.getElementById('event_category').innerHTML = getTranslate(category_code);
@@ -268,10 +268,10 @@
                         let hours = Math.trunc(event.duration / 60),
                             minutes = event.duration % 60;
 
-                        let category_code = typeof event.type === 'undefined' ? 'Category' : event.type.i18n_category_code,
-                            type_code = typeof event.type === 'undefined' ? 'Type' : event.type.i18n_name_code,
-                            destination_code = typeof event.destination === 'undefined' ? 'Destination' : event.destination.i18n_name_code,
-                            status_code = typeof event.status === 'undefined' ? 'Status' : event.status.i18n_name_code;
+                        let category_code = typeof event.type === 'undefined' ? '' : event.type.i18n_category_code,
+                            type_code = typeof event.type === 'undefined' ? '' : event.type.i18n_name_code,
+                            destination_code = (typeof event.destination === 'undefined' || event.destination_id == 0) ? '' : event.destination.i18n_name_code,
+                            status_code = typeof event.status === 'undefined' ? '' : event.status.i18n_name_code;
 
                         let start_hours = new Date(event.time_start).getHours(),
                             start_minutes = new Date(event.time_start).getMinutes();
@@ -321,7 +321,7 @@
     function getTranslate(code) {
         let translate = currentTranslations.find(item => item.code === code && item.locale_id == locale_id);
 
-        return typeof translate === 'undefined' ? 'unknown' : translate.text;
+        return typeof translate === 'undefined' ? '' : translate.text;
     }
 
     function updateCountdown(event) {
