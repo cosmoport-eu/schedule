@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
+use App\Models\EventFacilities;
 use App\Models\Facilities;
 use App\Models\Materials;
 use App\Models\Translations;
@@ -13,6 +14,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class TypesController
@@ -196,6 +198,34 @@ class TypesController extends Controller
     public function update(Request $request, $id)
     {
         $array = $request->post();
+        $validator = Validator::make($request->all(), [
+            'i18n_category_code' => 'required|string',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'default_duration_hours' => 'nullable|integer|min:0',
+            'default_duration_minutes' => 'nullable|integer|min:0|max:59',
+            'default_cost' => 'nullable|numeric|min:0',
+            'default_participants_number' => 'nullable|integer|min:0',
+            'material_ids' => 'nullable|array',
+            'material_ids.*' => 'exists:materials,id',
+            'facility_ids' => 'array',
+            'facility_ids.*' => 'exists:facilities,id',
+            'subtypes' => 'nullable|array',
+            'subtypes.*.name' => 'required|string|max:255',
+            'subtypes.*.description' => 'required|string',
+            'subtypes.*.default_duration_hours' => 'required|integer|min:0',
+            'subtypes.*.default_duration_minutes' => 'required|integer|min:0|max:59',
+            'subtypes.*.default_cost' => 'nullable|numeric|min:0',
+            'subtypes.*.default_participants_number' => 'nullable|integer|min:0'
+        ]);
+ 
+        if ($validator->fails()) {
+            dd($validator);
+            return redirect('post/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
         $validatedData = $request->validate([
             'i18n_category_code' => 'required|string',
             'name' => 'required|string|max:255',
@@ -216,6 +246,7 @@ class TypesController extends Controller
             'subtypes.*.default_cost' => 'nullable|numeric|min:0',
             'subtypes.*.default_participants_number' => 'nullable|integer|min:0'
         ]);
+        dd($array);
 
         $date = Carbon::now()->format('Y-m-d H:i:s');
 
@@ -304,11 +335,11 @@ class TypesController extends Controller
                         'updated_at' => $date
                     ]);
 
-                    if (isset($subtype['material_ids'])) {
+                    if (isset($subtypeData['material_ids'])) {
                         $newSubtype->materials()->sync($subtypeData['material_ids']);
                     }
 
-                    if (isset($subtype['facility_ids'])) {
+                    if (isset($subtypeData['facility_ids'])) {
                         $newSubtype->facilities()->sync($subtypeData['facility_ids']);
                     }
 
@@ -317,9 +348,9 @@ class TypesController extends Controller
             }
         }
 
-//        $model->materials()->sync($validatedData['material_ids']);
-//
-//        $model->facilities()->sync($validatedData['facility_ids']);
+       $model->materials()->sync($validatedData['material_ids']);
+
+       $model->facilities()->sync($validatedData['facility_ids']);
 
         return back()
             ->withInput($validatedData)

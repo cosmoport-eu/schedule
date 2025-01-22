@@ -130,56 +130,56 @@
                         </div>
                     </div>
 
-                    {{--<div class="grid grid-cols-2 gap-4 mb-4">--}}
-                        {{--<div>--}}
-                            {{--<label class="block mb-2 text-xs uppercase font-bold text-gray-700" for="material_ids">Materials</label>--}}
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block mb-2 text-xs uppercase font-bold text-gray-700" for="material_ids">Materials</label>
 
-                            {{--<select class="border border-gray-400 p-2 w-full"--}}
-                                    {{--id="material_ids"--}}
-                                    {{--name="material_ids[]"--}}
-                                    {{--multiple="multiple"--}}
-                            {{-->--}}
-                                {{--<option value="" selected>Select Materials (optional)</option>--}}
-                                {{--@if (isset($materials))--}}
-                                    {{--@foreach($materials as $material)--}}
-                                        {{--<option value="{{ $material->id }}"--}}
-                                                {{--@if(in_array($material->id, old('material_ids', []))) selected @endif--}}
-                                        {{-->--}}
-                                            {{--{{ $material->translationEn->text }}--}}
-                                        {{--</option>--}}
-                                    {{--@endforeach--}}
-                                {{--@endif--}}
-                            {{--</select>--}}
+                            <select class="border border-gray-400 p-2 w-full"
+                                    id="material_ids"
+                                    name="material_ids[]"
+                                    multiple="multiple"
+                            >
+                                <option value="">Select Materials (optional)</option>
+                                @if (isset($materials))
+                                    @foreach($materials as $material)
+                                        <option value="{{ $material->id }}"
+                                                @if(in_array($material->id, old('material_ids', []))) selected @endif
+                                        >
+                                            {{ $material->translationEn->text }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
 
-                            {{--@error('material_ids')--}}
-                            {{--<p class="text-red-500 text-xs mt-1">{{ $message }}</p>--}}
-                            {{--@enderror--}}
-                        {{--</div>--}}
-                        {{--<div>--}}
-                            {{--<label class="block mb-2 text-xs uppercase font-bold text-gray-700" for="facility_ids">Facilities</label>--}}
+                            @error('material_ids')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-xs uppercase font-bold text-gray-700" for="facility_ids">Facilities</label>
 
-                            {{--<select class="border border-gray-400 p-2 w-full"--}}
-                                    {{--id="facility_ids"--}}
-                                    {{--name="facility_ids[]"--}}
-                                    {{--multiple--}}
-                            {{-->--}}
-                                {{--<option value="" selected>Select Facilities</option>--}}
-                                {{--@if (isset($facilities))--}}
-                                    {{--@foreach($facilities as $facility)--}}
-                                        {{--<option value="{{ $facility->id }}"--}}
-                                                {{--@if(in_array($facility->id, old('facility_ids', []))) selected @endif--}}
-                                        {{-->--}}
-                                            {{--{{ $facility->translationEn->text }}--}}
-                                        {{--</option>--}}
-                                    {{--@endforeach--}}
-                                {{--@endif--}}
-                            {{--</select>--}}
+                            <select class="border border-gray-400 p-2 w-full"
+                                    id="facility_ids"
+                                    name="facility_ids[]"
+                                    multiple
+                            >
+                                <option value="">Select Facilities</option>
+                                @if (isset($facilities))
+                                    @foreach($facilities as $facility)
+                                        <option value="{{ $facility->id }}"
+                                                @if(in_array($facility->id, old('facility_ids', []))) selected @endif
+                                        >
+                                            {{ $facility->translationEn->text }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
 
-                            {{--@error('facility_ids')--}}
-                            {{--<p class="text-red-500 text-xs mt-1">{{ $message }}</p>--}}
-                            {{--@enderror--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                            @error('facility_ids')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
 
                 <div id="subtypes_container"></div>
@@ -307,42 +307,42 @@
                                 >
                             </div>
                         </div>
-                        {{--<div class="grid grid-cols-2 gap-4 mb-4">--}}
-                            {{--<div>--}}
-                                {{--<label class="block mb-2 text-xs uppercase font-bold text-gray-700" for="subtypes[${subtypeIndex}][material_ids]">Materials</label>--}}
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block mb-2 text-xs uppercase font-bold text-gray-700" for="subtypes[${subtypeIndex}][material_ids]">Materials</label>
 
-                                {{--<select class="border border-gray-400 p-2 w-full"--}}
-                                        {{--id="subtypes[${subtypeIndex}][material_ids]"--}}
-                                        {{--name="subtypes[${subtypeIndex}][material_ids][]"--}}
-                                        {{--multiple="multiple"--}}
-                                {{-->--}}
-                                    {{--<option value="" selected>Select Materials (optional)</option>--}}
-                                    {{--@if (isset($materials))--}}
-                                        {{--@foreach($materials as $material)--}}
-                                        {{--<option value="{{ $material->id }}">{{ $material->translationEn->text }}</option>--}}
-                                        {{--@endforeach--}}
-                                    {{--@endif--}}
-                                {{--</select>--}}
-                            {{--</div>--}}
+                                <select class="border border-gray-400 p-2 w-full"
+                                        id="subtypes[${subtypeIndex}][material_ids]"
+                                        name="subtypes[${subtypeIndex}][material_ids][]"
+                                        multiple="multiple"
+                                >
+                                    <option value="">Select Materials (optional)</option>
+                                    @if (isset($materials))
+                                        @foreach($materials as $material)
+                                        <option value="{{ $material->id }}">{{ $material->translationEn->text }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
 
-                            {{--<div>--}}
-                                {{--<label class="block mb-2 text-xs uppercase font-bold text-gray-700" for="subtypes[${subtypeIndex}][facility_ids]">Facilities</label>--}}
+                            <div>
+                                <label class="block mb-2 text-xs uppercase font-bold text-gray-700" for="subtypes[${subtypeIndex}][facility_ids]">Facilities</label>
 
-                                {{--<select class="border border-gray-400 p-2 w-full"--}}
-                                        {{--id="subtypes[${subtypeIndex}][facility_ids]"--}}
-                                        {{--name="subtypes[${subtypeIndex}][facility_ids][]"--}}
-                                        {{--multiple--}}
-                                        {{--required--}}
-                                {{-->--}}
-                                    {{--<option value="" selected>Select Facilities</option>--}}
-                                    {{--@if (isset($facilities))--}}
-                                        {{--@foreach($facilities as $facility)--}}
-                                        {{--<option value="{{ $facility->id }}">{{ $facility->translationEn->text }}</option>--}}
-                                        {{--@endforeach--}}
-                                    {{--@endif--}}
-                                {{--</select>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
+                                <select class="border border-gray-400 p-2 w-full"
+                                        id="subtypes[${subtypeIndex}][facility_ids]"
+                                        name="subtypes[${subtypeIndex}][facility_ids][]"
+                                        multiple
+                                        required
+                                >
+                                    <option value="">Select Facilities</option>
+                                    @if (isset($facilities))
+                                        @foreach($facilities as $facility)
+                                        <option value="{{ $facility->id }}">{{ $facility->translationEn->text }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     `;
 
